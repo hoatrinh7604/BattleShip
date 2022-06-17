@@ -47,9 +47,11 @@ public class ItemController : MonoBehaviour
     {
         if (isKilled)
             return;
-        
-        GameController.Instance.UserChooseItem(row, col, isUser);
-        image.SetActive(true);
+        if (GameController.Instance.canChoose)
+        {
+            GameController.Instance.UserChooseItem(row, col, isUser);
+            image.SetActive(true);
+        }
     }
 
     public void ShowImage()

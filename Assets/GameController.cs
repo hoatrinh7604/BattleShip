@@ -133,6 +133,7 @@ public class GameController : MonoBehaviour
 
     public void StartNewTurn()
     {
+        canChoose = true;
         timeNotice = 0;
         time = timeOfGame;
         currentTurn = 0;
@@ -144,13 +145,15 @@ public class GameController : MonoBehaviour
 
     IEnumerator HandleTurn()
     {
-        yield return new WaitForSeconds(0.5f);
         currentTurn++;
+        yield return new WaitForSeconds(0.25f);
+        
         GetComponent<UIController>().UpdateTurn(currentTurn % 2 == 0);
 
         if(currentTurn % 2 == 0)
         {
             // User turn
+            canChoose = true;
         }
         else
         {
@@ -357,10 +360,12 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public bool canChoose = true;
     public void UserChooseItem(int row, int col, bool isUser)
     {
-        if (currentTurn % 2 == 1) return;
+        if (!canChoose) return;
         if (!isUser) return;
+        canChoose = false;
         //numberOfTry--;
         //UpdateRemainingShuffe();
         int check = row * this.col + col;
